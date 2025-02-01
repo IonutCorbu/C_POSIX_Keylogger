@@ -6,6 +6,11 @@ I implemented a basic solution for a keylogger in C using the POSIX API. The sol
 
 ---
 
+## Future work
+
+- To make the keylogger more difficult to detect, I will maintain communication with the server using a Command and Control (C2) communication paradigm. This will involve periodically sending heartbeat signals from infected systems to the server and receiving instructions, such as commands to transmit logged keystrokes.
+- For server-side analysis of the received data, I will integrate a pattern-based search to identify potential credentials within the captured text. Additionally, a machine learning algorithm will be implemented to estimate the likelihood that specific character sequences are actual passwords. 
+
 ## Tasks to be Implemented
 
 Here is a list of tasks for future development:
@@ -36,13 +41,13 @@ Here is a list of tasks for future development:
 1. Clone the repository:
 
     ```bash
-    git clone https://your-repository-link.git
+    git clone https://github.com/IonutCorbu/C_POSIX_Keylogger.git
     ```
 
 2. Change to the project directory:
 
     ```bash
-    cd keylogger
+    cd C_POSIX_Keylogger
     ```
 
 3. Compile the C code:
