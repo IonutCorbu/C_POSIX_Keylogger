@@ -2,6 +2,8 @@ package org.example.Controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.example.DTO.HeartbeatAnalyzeResponse;
+import org.example.DTO.PasswordPredictionResponse;
 import org.example.Entities.Heartbeat;
 import org.example.Repositories.HeartbeatsRepository;
 import org.example.Repositories.VictimsRepository;
@@ -70,6 +72,22 @@ public class HeartbeatsController {
                 .body(fileContent);
     }
 
+    @GetMapping("/analyze/{heartbeatId}")
+    @PreAuthorize("hasRole('USER')")
+    public HeartbeatAnalyzeResponse analyze(@PathVariable Long heartbeatId) {
+        return heartbeatService.analyzeHeartbeat(heartbeatId);
+    }
 
+    @GetMapping("/analyze_gemini/{heartbeatId}")
+    @PreAuthorize("hasRole('USER')")
+    public HeartbeatAnalyzeResponse analyzeGemini(@PathVariable Long heartbeatId) {
+        return heartbeatService.analyzeGeminiHeartbeat(heartbeatId);
+    }
+
+    @GetMapping("/analyze_ollama/{heartbeatId}")
+    @PreAuthorize("hasRole('USER')")
+    public HeartbeatAnalyzeResponse analyzeOllama(@PathVariable Long heartbeatId) {
+        return heartbeatService.analyzeOllamaHeartbeat(heartbeatId);
+    }
 }
 

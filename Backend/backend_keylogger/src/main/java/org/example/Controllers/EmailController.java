@@ -6,6 +6,7 @@ import org.example.DTO.EmailRequest;
 import org.example.Services.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class EmailController {
     }
 
     @PostMapping("/send")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> sendEmailWithAttachment(@RequestBody EmailRequest request) {
         String filePath = "D:\\Disertatie interfata\\Resurse\\Invoice archive.zip";
         try {

